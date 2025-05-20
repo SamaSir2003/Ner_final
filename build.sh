@@ -50,10 +50,10 @@ if db_url:
 # Run migrations after connection is established
 python manage.py migrate
 
-if [ -n "$DJANGO_SUPERUSER_USERNAME" ] && [ -n "$DJANGO_SUPERUSER_EMAIL" ] && [ -n "$DJANGO_SUPERUSER_PASSWORD" ]; then
-    echo "Creating superuser..."
-    python manage.py createsuperuser --noinput
-    echo "Superuser created successfully."
-else
-    echo "Superuser environment variables not set. Skipping superuser creation."
-fi
+# if [ -n "$DJANGO_SUPERUSER_USERNAME" ] && [ -n "$DJANGO_SUPERUSER_EMAIL" ] && [ -n "$DJANGO_SUPERUSER_PASSWORD" ]; then
+#     echo "Creating superuser..."
+#     python manage.py createsuperuser --noinput
+#     echo "Superuser created successfully."
+# else
+#     echo "Superuser environment variables not set. Skipping superuser creation."
+# fi
