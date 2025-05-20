@@ -592,8 +592,7 @@ function removeCurrentDocumentFromList() {
         !currentAnnotationIds.includes(annotation.id)
     );
 
-    // Update UI
-    document.getElementById("totalAnnotations").textContent = totalDocuments;
+    
 }
 
 // Function to get output filename based on domain
