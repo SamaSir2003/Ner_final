@@ -1,0 +1,80 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Login</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/login.css' %}">
+</head>
+
+<body>
+    <div class="background">
+        <div class="waves">
+            <div class="wave"></div>
+            <div class="wave"></div>
+            <div class="wave"></div>
+        </div>
+        <div class="shapes">
+            <div class="shape"></div>
+            <div class="shape"></div>
+            <div class="shape"></div>
+            <div class="shape"></div>
+            <div class="shape"></div>
+            <div class="shape"></div>
+        </div>
+    </div>
+
+    <div class="login-container">
+        <div class="info-side">
+            <div class="floating-icons">
+                <div class="icon">+</div>
+                <div class="icon">○</div>
+                <div class="icon">□</div>
+                <div class="icon">×</div>
+            </div>
+            <h1>Welcome back!</h1>
+            <p>You can sign in to access with your existing account. Get ready to explore all the amazing features we offer.</p>
+        </div>
+
+        <div class="form-side">
+            <h2>Sign In</h2>
+            <form method="POST" action="">
+                {% csrf_token %}
+                <div class="input-group">
+                    <label for="username">Username</label>
+                    <div class="icon-input">
+                        <i>👤</i>
+                        <input type="text" id="username" name="username" placeholder="Enter your username" required>
+                    </div>
+                </div>
+
+                <div class="input-group">
+                    <label for="password">Password</label>
+                    <div class="icon-input">
+                        <i>🔒</i>
+                        <input type="password" id="password" name="password" placeholder="Enter your password" required>
+                    </div>
+                </div>
+
+                <div class="extra-options">
+                    <div class="remember-me">
+                        <input type="checkbox" id="remember" name="remember">
+                        <label for="remember">Remember me</label>
+                    </div>
+                    <a href="#" class="forgot-password">Forgot password?</a>
+                </div>
+
+                <button type="submit" class="login-btn">Sign In</button>
+
+                <div class="separator">or continue with</div>
+
+                <div class="create-account">
+                    New here? <a href="#">Create an Account</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</body>
+
+
+</html>

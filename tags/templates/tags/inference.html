@@ -1,0 +1,66 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Inference Page</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/navbar.css' %}" />
+    <link rel="stylesheet" type="text/css" href="{% static 'css/inference.css' %}">
+    <link rel="icon" type="image/png" href="{% static 'images/favicon.png' %}">
+</head>
+
+<body>
+    <div class="background">
+        <div class="waves">
+            <div class="wave"></div>
+            <div class="wave"></div>
+        </div>
+    </div>
+
+    <nav class="navbar">
+        <div class="navbar-container">
+            <div class="left-section">
+                <span class="logo">Annotator Dashboard</span>
+                <ul class="nav-links">
+                    <li><a href="/home">Home</a></li>
+                </ul>
+                <ul class="nav-links">
+                    <li><a href="/inference">Inference</a></li>
+                </ul>
+                <ul class="nav-links">
+                    <li><a href="/domain">Domain</a></li>
+                </ul>
+            </div>
+            <form action="{% url 'logout' %}" method="post" class="logout-form">
+                {% csrf_token %}
+                <button type="submit" class="logout-btn">Logout</button>
+            </form>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="main-content">
+            <div class="text-box">
+                <div contenteditable="true" id="inputText"></div>
+            </div>
+
+            <div class="button-row">
+                <button class="auto-tag" onclick="autoTag()">Auto Tag</button>
+                <button class="download-excel" onclick="downloadExcel()">Download Excel</button>
+            </div>
+        </div>
+
+        <div class="tags-sidebar">
+            <div class="tags-header">Available Tags</div>
+            <div class="tags-list">
+                {% for tag in tags %}
+                <div class="tag">{{ tag }}</div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+    <script src="{% static 'js/inference.js' %}"></script>
+</body>
+
+</html>

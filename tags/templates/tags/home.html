@@ -1,0 +1,124 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Tag Manager</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/navbar.css' %}" />
+    <link rel="stylesheet" type="text/css" href="{% static 'css/home.css' %}" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" rel="stylesheet" />
+    <style>
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeOut {
+            from {
+                opacity: 1;
+                transform: translateY(0);
+            }
+
+            to {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+        }
+    </style>
+</head>
+
+
+<body class="bg-gray-50">
+    <div class="background">
+        <div class="waves">
+            <div class="wave"></div>
+            <div class="wave"></div>
+            <div class="wave"></div>
+        </div>
+    </div>
+    <script>
+        const tag1 = "{{ tags|safe }}"; //might get slow..change to api fetch
+        const tag2 = "{{ tags2|safe }}";
+        const tag3 = "{{ tags3|safe }}"
+    </script>
+    <script src="{% static 'js/home.js' %}"></script>
+    <nav class="navbar">
+        <div class="navbar-container">
+            <div class="left-section">
+                <span class="logo">Annotator Dashboard</span>
+                <ul class="nav-links">
+                    <li><a href="/home">Home</a></li>
+                </ul>
+                <ul class="nav-links">
+                    <li><a href="/inference">Inference</a></li>
+                </ul>
+                <ul class="nav-links">
+                    <li><a href="/domain">Domain</a></li>
+                </ul>
+            </div>
+            <form action="{% url 'logout' %}" method="post" class="logout-form">
+                {% csrf_token %}
+                <button type="submit" class="logout-btn">Logout</button>
+            </form>
+        </div>
+    </nav>
+    <div class="container">
+        <div class="tag-container">
+            <h3 class="text-lg font-bold mb-4">Available Tags</h3>
+
+            <input type="text" id="tagSearch" class="p-2 border rounded w-full mb-4"
+                placeholder="Search or select a tag..." onkeyup="filterTags()" />
+            <div class="tag-list" id="tagList"></div>
+        </div>
+
+        <div class="main-content">
+            <h2 class="text-xl font-bold mb-4">Tag Annotator</h2>
+            <div id="sentencesContainer" class="p-4 border rounded-lg bg-white shadow-md"
+                style="max-height: 450px; overflow-y: auto"></div>
+            <div id="currentFileName" class="text-sm text-gray-500 mt-2"></div>
+            <!-- <div class="stats-container">
+                <h3 class="text-lg font-bold">Top 5 Tags</h3>
+                <ul id="topTags" class="mt-4"></ul>
+            </div> -->
+            <button id="assignTagButton" onclick="assignTag()" class="mt-4 p-2 bg-blue-500 text-white rounded">
+                Assign Tag
+            </button>
+            <button onclick="submitFile()" class="mt-4 p-2 bg-green-500 text-white rounded">
+                Submit
+            </button>
+            <button class="mt-4 p-2 bg-green-500 text-white rounded" onclick="skipFile()">
+                Skip
+            </button>
+            <button class="mt-4 p-2 bg-green-500 text-white rounded" onclick="AutoTag()">
+                Auto Tag
+            </button>
+        </div>
+
+        <div class="tag-container">
+            <h3 class="text-lg font-bold mb-4">Top Used Tags</h3>
+            <div id="topTagsList" class="tag-list"></div>
+        </div>
+        <!-- Dialog Box HTML -->
+        <div id="emptyLinesDialog"
+            style="display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background: white; border: 1px solid #ccc; padding: 20px; z-index: 1000;">
+            <p>Some sentences have no tags assigned! How would you like to proceed?</p>
+            <button id="cancelBtn">Cancel</button>
+            <button id="submitAnywaysBtn">Submit Anyways</button>
+            <button id="saveForLaterBtn">Save and Submit</button>
+        </div>
+
+        <!-- Optional overlay for backdrop effect -->
+        <div id="dialogOverlay"
+            style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.5); z-index: 999;">
+        </div>
+    </div>
+</body>
+
+</html>

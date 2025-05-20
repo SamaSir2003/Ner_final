@@ -1,0 +1,50 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Validation Domain Selection</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/validation_domain.css' %}" />
+</head>
+
+<body>
+    <script src="{% static 'js/validation_domain.js' %}"></script>
+    <nav class="navbar">
+        <div class="navbar-container">
+            <div class="left-section">
+                <span class="logo">Annotator Dashboard</span>
+            </div>
+            <form action="{% url 'logout' %}" method="post" class="logout-form">
+                {% csrf_token %}
+                <button type="submit" class="logout-btn">Logout</button>
+            </form>
+        </div>
+    </nav>
+    <div class="container">
+        <h2>Choose Validation Domain</h2>
+        <div class="domain-selection">
+            <div class="domain-card" onclick="selectValidationDomain('Gen')">
+                <div class="domain-card-content">
+                    <h3>General</h3>
+                    <span class="ner">NER Validation</span>
+                </div>
+            </div>
+            <div class="domain-card" onclick="selectValidationDomain('Med')">
+                <div class="domain-card-content">
+                    <h3>Medical</h3>
+                    <span class="ner">NER Validation</span>
+                </div>
+            </div>
+            <div class="domain-card" onclick="selectValidationDomain('Fin')">
+                <div class="domain-card-content">
+                    <h3>Financial</h3>
+                    <span class="ner">NER Validation</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

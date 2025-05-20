@@ -1,0 +1,4 @@
+db.sqlite3
+tags/_pycache_/
+tagproject/_pycache_/
+*.py[cod]

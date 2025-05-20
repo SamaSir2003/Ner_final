@@ -1,0 +1,149 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Admin Dashboard</title>
+  <link rel="stylesheet" type="text/css" href="{% static 'css/adminpage.css' %}">
+  <link rel="stylesheet" type="text/css" href="{% static 'css/navbar.css' %}" />
+  <link rel="icon" type="image/png" href="{% static 'images/favicon.png' %}">
+
+</head>
+
+<body>
+  <div class="background">
+    <div class="waves">
+      <div class="wave"></div>
+      <div class="wave"></div>
+    </div>
+  </div>
+
+  <nav class="navbar">
+    <div class="navbar-container">
+      <div class="left-section">
+        <span class="logo">Annotator Dashboard</span>
+        <ul class="nav-links">
+          <li><a href="/adminhome">Home</a></li>
+        </ul>
+        <ul class="nav-links">
+          <li><a href="/adminhome/users">Users</a></li>
+        </ul>
+        <ul class="nav-links">
+          <li><a href="/adminhome/tags">Tags</a></li>
+        </ul>
+      </div>
+      <form action="{% url 'logout' %}" method="post" class="logout-form">
+        {% csrf_token %}
+        <button type="submit" class="logout-btn">Logout</button>
+      </form>
+    </div>
+  </nav>
+  <div class="admin-container">
+    <!-- <div class="button-group">
+      <button class="action-button" onclick="openAddUserDialog()">
+        add user
+      </button>
+      <button class="action-button" onclick="clearTags()">
+        clear all tags
+      </button>
+      <button class="action-button" onclick="showAddTagDialog()">
+        add tag
+      </button>
+
+    </div> -->
+    <h2 class="section-title">Admin Dashboard</h2>
+
+    <div class="files-grid">
+      <div class="upload-section">
+        <h3 class ="upload-file">Upload File</h3>
+        <label for="file-category">Select Category:</label>
+        <select id="file-category">
+          <option value="text_files">General</option>
+          <option value="text_files_fin">Financial</option>
+          <option value="text_files_med">Medical</option>
+        </select>
+        <div class="upload-area" onclick="triggerFileInput()" ondrop="handleDrop(event)"
+          ondragover="handleDragOver(event)">
+          <div class="upload-icon">📤</div>
+          <p>upload file / drag and drop here</p>
+          <input type="file" id="file-input" / accept=".txt">
+        </div>
+      </div>
+
+      <div class="result-files-container">
+        <h3>Uploaded Files</h3>
+        <ul id="upload-files-list" class="files-list"></ul>
+      </div>
+    </div>
+
+    <div class="result-files-container full-width">
+      <h3>Result Files</h3>
+      <ul id="result-files-list" class="files-list">
+        <div class="scroll-container"></div>
+      </ul>
+    </div>
+
+    <!-- <h3>Tags</h3>
+    <input type="text" id="tagSearch" placeholder="Search tags..." onkeyup="filterTags()" />
+    <div id="tagSelector" class="tag-container">
+      {% for tag in tags %}
+      <div class="tag">
+        <span onclick="selectTag('{{ tag }}')">{{ tag }}</span>
+        <span class="delete-tag" onclick="confirmDeleteTag('{{ tag }}')">
+          <img src="{% static 'images/delete-icon.png' %}" alt="Icon" width="20" height="20">
+        </span>
+      </div> 
+      {% endfor %}-->
+  </div>
+
+  <div id="addUserDialog" class="dialog-overlay" style="display: none">
+    <div class="dialog-box">
+      <div class="dialog-title">Add New User</div>
+      <form id="addUserForm" onsubmit="submitNewUser(event)">
+        <div class="input-group">
+          <label for="username">Username</label>
+          <input type="text" id="username" name="username" required />
+        </div>
+        <div class="input-group">
+          <label for="password">Password</label>
+          <input type="password" id="password" name="password" required />
+        </div>
+        <div class="dialog-buttons">
+          <button type="button" class="cancel-btn" onclick="closeAddUserDialog()">
+            Cancel
+          </button>
+          <button type="submit" class="submit-btn">Add User</button>
+        </div>
+      </form>
+    </div>
+  </div>
+  <div id="addTagDialog" class="dialog" style="display: none">
+    <div class="dialog-content">
+      <h3>Add a New Tag</h3>
+
+      <!-- Dropdown for selecting category -->
+      <label for="tagCategory">Select Category:</label>
+      <select id="tagCategory">
+        <option value="">-- Select --</option>
+        <option value="Gen">General</option>
+        <option value="Med">Medical</option>
+        <option value="Fin">Medical</option>
+      </select>
+
+      <!-- Input for tag name -->
+      <input type="text" id="newTagInput" placeholder="Enter tag name" />
+
+      <div class="dialog-actions">
+        <button onclick="submitNewTag()">Add</button>
+        <button onclick="closeAddTagDialog()">Cancel</button>
+      </div>
+    </div>
+  </div>
+
+  <p id="selectedTag" class="selected-tag"></p>
+  </div>
+
+  <script src="{% static 'js/adminpage.js' %}"></script>
+</body>
+
+</html>

@@ -1,0 +1,115 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Admin Dashboard</title>
+  <link rel="stylesheet" type="text/css" href="{% static 'css/navbar.css' %}" />
+  <link rel="stylesheet" type="text/css" href="{% static 'css/adminpage.css' %}">
+  <link rel="stylesheet" type="text/css" href="{% static 'css/users.css' %}">
+  <link rel="icon" type="image/png" href="{% static 'images/favicon.png' %}">
+</head>
+
+<body>
+  <div class="background">
+      <div class="waves">
+          <div class="wave"></div>
+          <div class="wave"></div>
+      </div>
+  </div>
+
+  <nav class="navbar">
+    <div class="navbar-container">
+        <div class="left-section">
+            <span class="logo">Annotator Dashboard</span>
+            <ul class="nav-links">
+                <li><a href="/adminhome">Home</a></li>
+            </ul>
+            <ul class="nav-links">
+                <li><a href="/adminhome/users">Users</a></li>
+            </ul>
+            <ul class="nav-links">
+                <li><a href="/adminhome/tags">Tags</a></li>
+            </ul>
+        </div>
+        <form action="{% url 'logout' %}" method="post" class="logout-form">
+            {% csrf_token %}
+            <button type="submit" class="logout-btn">Logout</button>
+        </form>
+    </div>
+</nav>
+
+  <div class="container">
+    <div class="header-section">
+      <h2>All Users</h2>
+      <div class="action-section">
+        <!-- <div class="search-bar">
+          <input type="text" id="userSearch" placeholder="Search users...">
+        </div> -->
+        <div class="action-buttons">
+          <button class="action-button add-user" onclick="openAddUserDialog()">
+            <span class="button-icon">➕</span> Add User
+          </button>
+          
+        </div>
+      </div>
+    </div>
+
+    <div class="users-container">
+      {% for user in users %}
+        <div class="user-card" id="user-{{ user.username }}">
+          <div class="user-image">
+            <img src="{% static 'images/default-image.jpg' %}" alt="User profile">
+          </div>
+          <div class="user-details">
+            <p class="username"><strong>{{ user.username }}</strong></p>
+            <p><span class="status-badge active">Active</span></p>
+            <p><span class="detail-label">Email:</span> {{ user.email }}</p>
+            <div class="stats-section">
+              <p><span class="detail-label">Words Annotated:</span></p>
+              <div class="stats-badges">
+                <span class="stat-badge general">General: {{ user.general_tagged_count }}</span>
+                <span class="stat-badge medical">Med: {{ user.medical_tagged_count }}</span>
+                <span class="stat-badge finance">Finance: {{ user.financial_tagged_count }}</span>
+              </div>
+            </div>
+          </div>
+          <button class="delete-btn" onclick="deleteUser('{{ user.username }}')">
+            <img src="{% static 'images/delete-icon.png' %}" alt="Delete" class="delete-icon">
+          </button>
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+
+  <!-- Add User Dialog -->
+  <div id="addUserDialog" class="dialog-overlay">
+    <div class="dialog-box">
+      <div class="dialog-title">Add New User</div>
+      <form id="addUserForm" onsubmit="submitNewUser(event)">
+        <div class="input-group">
+          <label for="username">Username</label>
+          <input type="text" id="username" name="username" required />
+        </div>
+        <div class="input-group">
+          <label for="password">Password</label>
+          <input type="password" id="password" name="password" required />
+        </div>
+        <div class="input-group">
+          <label for="email">Email</label>
+          <input type="email" id="email" name="email" required />
+        </div>
+        <div class="dialog-buttons">
+          <button type="button" class="cancel-btn" onclick="closeAddUserDialog()">
+            Cancel
+          </button>
+          <button type="submit" class="submit-btn">Add User</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script src="{% static 'js/users.js' %}"></script>
+</body>
+
+</html>

@@ -1,0 +1,44 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard Selection</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/selection.css' %}" />
+</head>
+
+<body>
+    <script src="{% static 'js/selection.js' %}"></script>
+    <nav class="navbar">
+        <div class="navbar-container">
+            <div class="left-section">
+                <span class="logo">Annotator Dashboard</span>
+            </div>
+            <form action="{% url 'logout' %}" method="post" class="logout-form">
+                {% csrf_token %}
+                <button type="submit" class="logout-btn">Logout</button>
+            </form>
+        </div>
+    </nav>
+    <div class="container">
+        <h2>Select Your Action</h2>
+        <div class="selection">
+            <div class="selection-card" onclick="selectAction('domain')">
+                <div class="selection-card-content">
+                    <h3>Choose Domain</h3>
+                    <span class="description">Select NER domain for annotation</span>
+                </div>
+            </div>
+            <div class="selection-card" onclick="selectAction('validate')">
+                <div class="selection-card-content">
+                    <h3>Validate Data</h3>
+                    <span class="description">Review and validate annotations</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

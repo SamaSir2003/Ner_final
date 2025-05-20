@@ -1,0 +1,123 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Validation Tool</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/validation_home.css' %}" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" rel="stylesheet" />
+    <style>
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeOut {
+            from {
+                opacity: 1;
+                transform: translateY(0);
+            }
+
+            to {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+        }
+    </style>
+</head>
+
+
+<body class="bg-gray-50">
+    <div class="background">
+        <div class="waves">
+            <div class="wave"></div>
+            <div class="wave"></div>
+            <div class="wave"></div>
+        </div>
+    </div>
+
+    <script>
+        const tag1 = "{{ tags|safe }}"; 
+        const tag2 = "{{ tags2|safe }}";
+    </script>
+    <script src="{% static 'js/validation_home.js' %}"></script>
+    <nav class="navbar">
+        <div class="navbar-container">
+            <div class="left-section">
+                <span class="logo">Validation Dashboard</span>
+                <ul class="nav-links">
+                    <li><a href="/selection">Selection</a></li>
+                </ul>
+                <ul class="nav-links">
+                    <li><a href="/validation_domain">Domain</a></li>
+                </ul>
+            </div>
+            <form action="{% url 'logout' %}" method="post" class="logout-form">
+                {% csrf_token %}
+                <button type="submit" class="logout-btn">Logout</button>
+            </form>
+        </div>
+    </nav>
+    <div class="container">
+        <div class="tag-container">
+            <h3 class="text-lg font-bold mb-4">Available Tags</h3>
+
+            <input type="text" id="tagSearch" class="p-2 border rounded w-full mb-4"
+                placeholder="Search or select a tag..." onkeyup="filterTags()" />
+            <div class="tag-list" id="tagList"></div>
+        </div>
+
+        <div class="main-content">
+            <h2 class="text-xl font-bold mb-4">Validation Tool</h2>
+            <div class="flex items-center mb-4">
+                <span class="mr-2">Domain:</span>
+                <span id="currentDomain" class="font-semibold bg-blue-100 px-2 py-1 rounded"></span>
+            </div>
+            <div id="sentencesContainer" class="p-4 border rounded-lg bg-white shadow-md"
+                style="max-height: 395px; overflow-y: auto"></div>
+            <div id="currentFileName" class="text-sm text-gray-500 mt-2"></div>
+            <div class="flex flex-wrap mt-4 space-x-2">
+                <button onclick="submitValidAnnotation()" class="p-2 bg-green-500 text-white rounded">
+                    Valid Annotation
+                </button>
+                <button class="p-2 bg-red-500 text-white rounded" onclick="submitInvalidAnnotation()">
+                    Invalid Annotation
+                </button>
+                <button id="paginationPrev" class="p-2 bg-gray-500 text-white rounded" onclick="loadPreviousAnnotation()">
+                    Previous
+                </button>
+                <button id="paginationNext" class="p-2 bg-gray-500 text-white rounded" onclick="loadNextAnnotation()">
+                    Next
+                </button>
+            </div>
+            <!-- <div class="mt-4 text-center">
+                <span id="currentAnnotation">0</span> / <span id="totalAnnotations">0</span>
+            </div> -->
+        </div>
+
+        <div class="tag-container">
+            <h3 class="text-lg font-bold mb-4">Top Used Tags</h3>
+            <div id="topTagsList" class="tag-list"></div>
+        </div>
+
+        <!-- Dialog Box HTML -->
+        <div id="emptyLinesDialog" class="bg-white rounded-lg shadow-xl p-6">
+            <p class="text-gray-800 text-lg mb-4">Do you approve these tags?</p>
+            <div class="button-group">
+                <button id="cancelBtn" class="bg-red-500 text-white">Cancel</button>
+                <button id="submitAnywaysBtn" class="bg-green-500 text-white">Approve</button>
+            </div>
+        </div>
+
+        <!-- Optional overlay for backdrop effect -->
+        <div id="dialogOverlay"></div>
+    </div>
+</body>
+</html>
